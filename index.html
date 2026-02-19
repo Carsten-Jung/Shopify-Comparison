@@ -32,7 +32,110 @@
     overflow-x: hidden;
   }
 
-  /* HEADER */
+  /* ═══════════════════════════════════════
+     STICKY BILLING TOGGLE
+  ═══════════════════════════════════════ */
+  .billing-toggle-bar {
+    position: sticky;
+    top: 0;
+    z-index: 200;
+    background: rgba(10,10,10,0.96);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid #222;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    height: 80px;
+    padding: 0 60px;
+  }
+
+  .billing-toggle-bar::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, transparent, rgba(0,212,160,0.03) 50%, transparent);
+    pointer-events: none;
+  }
+
+  .toggle-hint {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--muted);
+    position: absolute;
+    left: 60px;
+  }
+
+  .toggle-options {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 5px;
+    position: relative;
+  }
+
+  .toggle-option {
+    position: relative;
+    z-index: 2;
+    padding: 10px 28px;
+    border-radius: 999px;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--muted);
+    cursor: pointer;
+    transition: color 0.25s;
+    white-space: nowrap;
+    user-select: none;
+  }
+
+  .toggle-option.active { color: #fff; }
+
+  .toggle-slider {
+    position: absolute;
+    top: 5px;
+    bottom: 5px;
+    border-radius: 999px;
+    background: linear-gradient(135deg, var(--accent), #00b085);
+    box-shadow: 0 0 20px rgba(0,212,160,0.25);
+    transition: left 0.3s cubic-bezier(.4,0,.2,1), width 0.3s cubic-bezier(.4,0,.2,1), background 0.3s;
+    z-index: 1;
+  }
+
+  .toggle-slider.monthly {
+    background: linear-gradient(135deg, var(--accent2), #cc5522);
+    box-shadow: 0 0 20px rgba(255,107,53,0.25);
+  }
+
+  .savings-pill {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 1px;
+    padding: 6px 14px;
+    border-radius: 999px;
+    background: rgba(0,212,160,0.1);
+    border: 1px solid rgba(0,212,160,0.3);
+    color: var(--accent);
+    transition: opacity 0.3s, transform 0.3s;
+    white-space: nowrap;
+  }
+
+  .savings-pill.hide {
+    opacity: 0;
+    transform: translateX(-8px);
+    pointer-events: none;
+  }
+
+  /* ═══════════════════════════════════════
+     HEADER
+  ═══════════════════════════════════════ */
   header {
     padding: 80px 60px 60px;
     border-bottom: 1px solid var(--border);
@@ -66,17 +169,18 @@
     color: #fff;
     margin-bottom: 24px;
   }
-
   h1 span { color: var(--accent); }
 
   .subtitle {
     font-size: 16px;
     color: var(--muted);
-    max-width: 600px;
+    max-width: 620px;
     font-weight: 300;
   }
 
-  /* SECTION */
+  /* ═══════════════════════════════════════
+     SECTIONS
+  ═══════════════════════════════════════ */
   section {
     padding: 70px 60px;
     border-bottom: 1px solid var(--border);
@@ -99,7 +203,9 @@
     margin-bottom: 40px;
   }
 
-  /* PLAN CARDS ROW */
+  /* ═══════════════════════════════════════
+     PLAN CARDS
+  ═══════════════════════════════════════ */
   .plans-row {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -112,16 +218,9 @@
     border: 1px solid var(--border);
     border-radius: 12px;
     padding: 28px 24px;
-    position: relative;
     transition: border-color 0.2s;
   }
-
   .plan-card:hover { border-color: #444; }
-
-  .plan-card.highlight {
-    border-color: var(--accent);
-    background: linear-gradient(135deg, rgba(0,212,160,0.05) 0%, var(--surface) 100%);
-  }
 
   .plan-badge {
     display: inline-block;
@@ -133,25 +232,21 @@
     border-radius: 20px;
     margin-bottom: 16px;
   }
-
-  .badge-basic { background: rgba(110,231,183,0.15); color: var(--basic); border: 1px solid rgba(110,231,183,0.3); }
-  .badge-grow { background: rgba(52,211,153,0.15); color: var(--grow); border: 1px solid rgba(52,211,153,0.3); }
-  .badge-advanced { background: rgba(5,150,105,0.2); color: #34d399; border: 1px solid rgba(5,150,105,0.4); }
-  .badge-plus { background: rgba(74,158,255,0.15); color: var(--plus); border: 1px solid rgba(74,158,255,0.3); }
+  .badge-basic    { background:rgba(110,231,183,.15); color:var(--basic);  border:1px solid rgba(110,231,183,.3); }
+  .badge-grow     { background:rgba(52,211,153,.15);  color:var(--grow);   border:1px solid rgba(52,211,153,.3); }
+  .badge-advanced { background:rgba(5,150,105,.2);    color:#34d399;       border:1px solid rgba(5,150,105,.4); }
+  .badge-plus     { background:rgba(74,158,255,.15);  color:var(--plus);   border:1px solid rgba(74,158,255,.3); }
 
   .plan-name {
     font-family: 'Playfair Display', serif;
-    font-size: 22px;
-    font-weight: 700;
-    color: #fff;
-    margin-bottom: 4px;
+    font-size: 22px; font-weight: 700;
+    color: #fff; margin-bottom: 2px;
   }
 
   .plan-price {
     font-family: 'DM Mono', monospace;
-    font-size: 28px;
-    font-weight: 500;
-    margin-bottom: 4px;
+    font-size: 30px; font-weight: 500;
+    margin-bottom: 2px;
   }
 
   .plan-price-sub {
@@ -168,191 +263,13 @@
     border-bottom: 1px solid var(--border);
     font-size: 13px;
   }
-
   .plan-stat:last-child { border-bottom: none; }
   .plan-stat .label { color: var(--muted); }
   .plan-stat .value { font-family: 'DM Mono', monospace; font-size: 12px; }
 
-  /* BREAK-EVEN SECTION */
-  .breakeven-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 14px;
-  }
-
-  .breakeven-table th {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--muted);
-    text-align: left;
-    padding: 14px 20px;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .breakeven-table td {
-    padding: 18px 20px;
-    border-bottom: 1px solid var(--border);
-    vertical-align: top;
-  }
-
-  .breakeven-table tr:last-child td { border-bottom: none; }
-
-  .breakeven-table tr:hover td { background: rgba(255,255,255,0.02); }
-
-  .upgrade-arrow {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 13px;
-    font-weight: 500;
-  }
-
-  .arrow-from { color: #888; }
-  .arrow-sym { color: var(--accent); font-size: 18px; }
-  .arrow-to { color: #fff; }
-
-  .breakeven-amount {
-    font-family: 'DM Mono', monospace;
-    font-size: 20px;
-    font-weight: 500;
-    color: var(--accent);
-  }
-
-  .breakeven-amount.online { color: var(--accent); }
-  .breakeven-amount.inperson { color: var(--accent3); }
-
-  .calc-detail {
-    font-size: 12px;
-    color: var(--muted);
-    margin-top: 4px;
-    font-family: 'DM Mono', monospace;
-  }
-
-  .savings-chip {
-    display: inline-block;
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    padding: 3px 10px;
-    background: rgba(0,212,160,0.1);
-    border: 1px solid rgba(0,212,160,0.2);
-    border-radius: 4px;
-    color: var(--accent);
-    margin-top: 6px;
-  }
-
-  /* FEATURE MATRIX */
-  .feature-section {
-    margin-top: 50px;
-  }
-
-  .upgrade-block {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 30px;
-    margin-bottom: 20px;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .upgrade-block::before {
-    content: '';
-    position: absolute;
-    left: 0; top: 0; bottom: 0;
-    width: 3px;
-  }
-
-  .upgrade-block.b2g::before { background: var(--grow); }
-  .upgrade-block.g2a::before { background: var(--advanced); }
-  .upgrade-block.a2p::before { background: var(--plus); }
-
-  .upgrade-block-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 18px;
-    font-weight: 700;
-    color: #fff;
-    margin-bottom: 6px;
-  }
-
-  .upgrade-block-sub {
-    font-size: 12px;
-    color: var(--muted);
-    margin-bottom: 20px;
-  }
-
-  .feature-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-  }
-
-  .feature-item {
-    display: flex;
-    gap: 10px;
-    align-items: flex-start;
-    font-size: 13px;
-  }
-
-  .feat-icon {
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 10px;
-    flex-shrink: 0;
-    margin-top: 2px;
-  }
-
-  .feat-icon.up { background: rgba(0,212,160,0.15); color: var(--accent); }
-  .feat-icon.new { background: rgba(74,158,255,0.15); color: var(--accent3); }
-
-  .feat-text strong { color: #fff; display: block; font-size: 13px; }
-  .feat-text span { color: var(--muted); font-size: 12px; }
-
-  /* WHO SECTION */
-  .who-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 16px;
-  }
-
-  .who-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 24px 20px;
-  }
-
-  .who-card-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 16px;
-    font-weight: 700;
-    color: #fff;
-    margin-bottom: 16px;
-    padding-bottom: 12px;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .who-item {
-    display: flex;
-    gap: 8px;
-    margin-bottom: 10px;
-    font-size: 13px;
-    color: #ccc;
-  }
-
-  .who-dot {
-    width: 6px; height: 6px;
-    border-radius: 50%;
-    margin-top: 6px;
-    flex-shrink: 0;
-  }
-
-  /* SUMMARY TABLE */
+  /* ═══════════════════════════════════════
+     SUMMARY CARDS
+  ═══════════════════════════════════════ */
   .summary-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -368,42 +285,179 @@
 
   .summary-label {
     font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--muted);
+    font-size: 10px; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--muted);
     margin-bottom: 8px;
   }
 
   .summary-value {
     font-family: 'DM Mono', monospace;
-    font-size: 22px;
-    font-weight: 500;
-    color: var(--accent);
-    margin-bottom: 4px;
+    font-size: 22px; font-weight: 500;
+    color: var(--accent); margin-bottom: 4px;
   }
 
   .summary-desc { font-size: 12px; color: var(--muted); }
 
-  /* NOTE BOX */
+  /* ═══════════════════════════════════════
+     BREAK-EVEN TABLE
+  ═══════════════════════════════════════ */
+  .breakeven-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+
+  .breakeven-table th {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--muted);
+    text-align: left; padding: 14px 20px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .breakeven-table td {
+    padding: 18px 20px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+
+  .breakeven-table tr:last-child td { border-bottom: none; }
+  .breakeven-table tr:hover td { background: rgba(255,255,255,0.02); }
+
+  .upgrade-arrow {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 13px; font-weight: 500;
+  }
+  .arrow-from { color: #888; }
+  .arrow-sym  { color: var(--accent); font-size: 18px; }
+  .arrow-to   { color: #fff; }
+
+  .breakeven-amount {
+    font-family: 'DM Mono', monospace;
+    font-size: 20px; font-weight: 500;
+    color: var(--accent);
+  }
+
+  .calc-detail {
+    font-size: 12px; color: var(--muted);
+    margin-top: 4px;
+    font-family: 'DM Mono', monospace;
+  }
+
+  .savings-chip {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    padding: 3px 10px;
+    background: rgba(0,212,160,0.1);
+    border: 1px solid rgba(0,212,160,0.2);
+    border-radius: 4px;
+    color: var(--accent); margin-top: 6px;
+  }
+
+  /* ═══════════════════════════════════════
+     FEATURE BLOCKS
+  ═══════════════════════════════════════ */
+  .upgrade-block {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 30px; margin-bottom: 20px;
+    position: relative; overflow: hidden;
+  }
+  .upgrade-block::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0; width: 3px;
+  }
+  .upgrade-block.b2g::before { background: var(--grow); }
+  .upgrade-block.g2a::before { background: var(--advanced); }
+  .upgrade-block.a2p::before { background: var(--plus); }
+
+  .upgrade-block-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px; font-weight: 700;
+    color: #fff; margin-bottom: 6px;
+  }
+  .upgrade-block-sub { font-size: 12px; color: var(--muted); margin-bottom: 20px; }
+
+  .feature-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .feature-item { display: flex; gap: 10px; align-items: flex-start; font-size: 13px; }
+
+  .feat-icon {
+    width: 20px; height: 20px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px; flex-shrink: 0; margin-top: 2px;
+  }
+  .feat-icon.up  { background:rgba(0,212,160,.15); color:var(--accent); }
+  .feat-icon.new { background:rgba(74,158,255,.15); color:var(--accent3); }
+
+  .feat-text strong { color:#fff; display:block; font-size:13px; }
+  .feat-text span   { color:var(--muted); font-size:12px; }
+
+  /* ═══════════════════════════════════════
+     WHO / PERSONA
+  ═══════════════════════════════════════ */
+  .who-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+
+  .who-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px 20px;
+  }
+
+  .who-card-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px; font-weight: 700; color: #fff;
+    margin-bottom: 16px; padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .who-item { display:flex; gap:8px; margin-bottom:10px; font-size:13px; color:#ccc; }
+  .who-dot  { width:6px; height:6px; border-radius:50%; margin-top:6px; flex-shrink:0; }
+
+  /* ═══════════════════════════════════════
+     NOTE BOX
+  ═══════════════════════════════════════ */
   .note-box {
-    background: rgba(255,107,53,0.08);
-    border: 1px solid rgba(255,107,53,0.2);
+    background: rgba(255,107,53,.08);
+    border: 1px solid rgba(255,107,53,.2);
     border-radius: 8px;
     padding: 16px 20px;
-    font-size: 13px;
-    color: #ccc;
+    font-size: 13px; color: #ccc;
     margin-top: 30px;
   }
   .note-box strong { color: var(--accent2); }
 
-  /* SCROLLBAR */
+  /* ═══════════════════════════════════════
+     ANIMATIONS
+  ═══════════════════════════════════════ */
+  @keyframes valueIn {
+    from { opacity: .2; transform: translateY(5px); }
+    to   { opacity: 1;  transform: translateY(0); }
+  }
+  .val-flash { animation: valueIn .2s ease forwards; }
+
+  /* ═══════════════════════════════════════
+     SCROLLBAR
+  ═══════════════════════════════════════ */
   ::-webkit-scrollbar { width: 6px; }
   ::-webkit-scrollbar-track { background: var(--bg); }
   ::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
 
   @media (max-width: 900px) {
-    section, header { padding: 40px 24px; }
+    section, header, .billing-toggle-bar { padding-left: 24px; padding-right: 24px; }
+    .toggle-hint { display: none; }
     .plans-row, .who-grid, .summary-grid { grid-template-columns: 1fr 1fr; }
     .feature-grid { grid-template-columns: 1fr; }
   }
@@ -411,58 +465,81 @@
 </head>
 <body>
 
+<!-- ═══════════════════════════════════════════════════
+     PROMINENT BILLING TOGGLE — sticky, always visible
+═══════════════════════════════════════════════════ -->
+<div class="billing-toggle-bar" id="toggleBar">
+  <span class="toggle-hint">Abrechnungszeitraum</span>
+
+  <div class="toggle-options" id="toggleOptions">
+    <div class="toggle-slider" id="toggleSlider"></div>
+    <div class="toggle-option active" id="optYearly"  onclick="setBilling('yearly')">Jährlich</div>
+    <div class="toggle-option"        id="optMonthly" onclick="setBilling('monthly')">Monatlich</div>
+  </div>
+
+  <div class="savings-pill" id="savingsPill">💰 Bis zu 25% sparen mit Jahresabo</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     HEADER
+═══════════════════════════════════════════════════ -->
 <header>
   <div class="eyebrow">Strategische Entscheidungsgrundlage</div>
   <h1>Shopify Paket<span>—</span><br>Kosten-Nutzen-Analyse</h1>
-  <p class="subtitle">Ab welchem Umsatz lohnt sich das Upgrade? Welche Features rechtfertigen den Mehrpreis? Eine datengetriebene Analyse für fundierte Entscheidungen.</p>
+  <p class="subtitle">Ab welchem Umsatz lohnt sich das Upgrade? Alle Break-even-Werte, Preisdifferenzen und Beispiel-ROIs passen sich automatisch an den gewählten Abrechnungszeitraum an.</p>
 </header>
 
-<!-- PLAN OVERVIEW -->
+<!-- ═══════════════════════════════════════════════════
+     01 — PLAN OVERVIEW
+═══════════════════════════════════════════════════ -->
 <section>
   <div class="section-subtitle">01 — Überblick</div>
   <div class="section-title">Die vier Pakete im Vergleich</div>
 
   <div class="plans-row">
+    <!-- BASIC -->
     <div class="plan-card">
       <div class="plan-badge badge-basic">Basic</div>
       <div class="plan-name">Basic</div>
-      <div class="plan-price" style="color:var(--basic)">25 €</div>
-      <div class="plan-price-sub">/Monat (jährlich)</div>
+      <div class="plan-price" style="color:var(--basic)" id="basic-price">25 €</div>
+      <div class="plan-price-sub" id="basic-sub">/Monat · jährlich abgerechnet</div>
       <div class="plan-stat"><span class="label">Online-Rate</span><span class="value">2,1% + 0,30 €</span></div>
       <div class="plan-stat"><span class="label">Drittanbieter</span><span class="value">2,0%</span></div>
       <div class="plan-stat"><span class="label">Mitarbeiter</span><span class="value">—</span></div>
       <div class="plan-stat"><span class="label">Lagerstandorte</span><span class="value">10</span></div>
       <div class="plan-stat"><span class="label">Support</span><span class="value">24/7 Chat</span></div>
     </div>
+    <!-- GROW -->
     <div class="plan-card">
       <div class="plan-badge badge-grow">Grow</div>
       <div class="plan-name">Grow</div>
-      <div class="plan-price" style="color:var(--grow)">66 €</div>
-      <div class="plan-price-sub">/Monat (jährlich)</div>
+      <div class="plan-price" style="color:var(--grow)" id="grow-price">66 €</div>
+      <div class="plan-price-sub" id="grow-sub">/Monat · jährlich abgerechnet</div>
       <div class="plan-stat"><span class="label">Online-Rate</span><span class="value">1,8% + 0,30 €</span></div>
       <div class="plan-stat"><span class="label">Drittanbieter</span><span class="value">1,0%</span></div>
       <div class="plan-stat"><span class="label">Mitarbeiter</span><span class="value">5 Accounts</span></div>
       <div class="plan-stat"><span class="label">Lagerstandorte</span><span class="value">10</span></div>
       <div class="plan-stat"><span class="label">Support</span><span class="value">24/7 Chat</span></div>
     </div>
+    <!-- ADVANCED -->
     <div class="plan-card">
       <div class="plan-badge badge-advanced">Advanced</div>
       <div class="plan-name">Advanced</div>
-      <div class="plan-price" style="color:#34d399">289 €</div>
-      <div class="plan-price-sub">/Monat (jährlich)</div>
+      <div class="plan-price" style="color:#34d399" id="advanced-price">289 €</div>
+      <div class="plan-price-sub" id="advanced-sub">/Monat · jährlich abgerechnet</div>
       <div class="plan-stat"><span class="label">Online-Rate</span><span class="value">1,6% + 0,30 €</span></div>
       <div class="plan-stat"><span class="label">Drittanbieter</span><span class="value">0,6%</span></div>
       <div class="plan-stat"><span class="label">Mitarbeiter</span><span class="value">15 Accounts</span></div>
       <div class="plan-stat"><span class="label">Lagerstandorte</span><span class="value">10</span></div>
       <div class="plan-stat"><span class="label">Support</span><span class="value">Enhanced Chat</span></div>
     </div>
+    <!-- PLUS -->
     <div class="plan-card">
       <div class="plan-badge badge-plus">Plus</div>
       <div class="plan-name">Plus</div>
       <div class="plan-price" style="color:var(--plus)">2.100 €</div>
-      <div class="plan-price-sub">/Monat (3-Jahres-Laufzeit)</div>
+      <div class="plan-price-sub"></div>
       <div class="plan-stat"><span class="label">Online-Rate</span><span class="value">Individuell</span></div>
-      <div class="plan-stat"><span class="label">In-Person</span><span class="value">Individuell</span></div>
       <div class="plan-stat"><span class="label">Drittanbieter</span><span class="value">Individuell</span></div>
       <div class="plan-stat"><span class="label">Mitarbeiter</span><span class="value">Unbegrenzt</span></div>
       <div class="plan-stat"><span class="label">Lagerstandorte</span><span class="value">200</span></div>
@@ -473,358 +550,327 @@
   <div class="summary-grid">
     <div class="summary-card">
       <div class="summary-label">Monatsdiff. Basic → Grow</div>
-      <div class="summary-value">+ 41 €</div>
-      <div class="summary-desc">Mehrkosten pro Monat für das Upgrade</div>
+      <div class="summary-value" id="diff-b2g">+ 41 €</div>
+      <div class="summary-desc" id="diff-b2g-desc">Mehrkosten/Monat bei jährlicher Zahlung</div>
     </div>
     <div class="summary-card">
       <div class="summary-label">Monatsdiff. Grow → Advanced</div>
-      <div class="summary-value">+ 223 €</div>
+      <div class="summary-value" id="diff-g2a">+ 223 €</div>
       <div class="summary-desc">Erheblicher Sprung – braucht hohen Umsatz</div>
     </div>
     <div class="summary-card">
       <div class="summary-label">Monatsdiff. Advanced → Plus</div>
-      <div class="summary-value">+ 1.811 €</div>
+      <div class="summary-value" id="diff-a2p">+ 1.811 €</div>
       <div class="summary-desc">Enterprise-Level – für große Händler</div>
     </div>
     <div class="summary-card">
-      <div class="summary-label">Wichtig zu wissen</div>
-      <div class="summary-value" style="font-size:14px; color:#ccc; margin-top: 4px;">Shopify Payments</div>
-      <div class="summary-desc">Die Card Rates gelten nur bei Nutzung von Shopify Payments</div>
+      <div class="summary-label">Hinweis</div>
+      <div class="summary-value" style="font-size:14px; color:#ccc; margin-top:4px;">Shopify Payments</div>
+      <div class="summary-desc">Card Rates nur bei Nutzung von Shopify Payments</div>
     </div>
   </div>
 </section>
 
-<!-- BREAK-EVEN -->
+<!-- ═══════════════════════════════════════════════════
+     02 — BREAK-EVEN
+═══════════════════════════════════════════════════ -->
 <section>
   <div class="section-subtitle">02 — Umsatz-Kalkulation</div>
   <div class="section-title">Ab wann rechnet sich das Upgrade?</div>
-  <p style="color:var(--muted); font-size:14px; margin-bottom:30px;">Die Berechnung basiert auf der monatlichen Differenz der Paketkosten geteilt durch die Ersparnis pro Euro Umsatz durch niedrigere Transaktionsgebühren.</p>
+  <p style="color:var(--muted); font-size:14px; margin-bottom:30px;">Monatliche Paketdifferenz ÷ Transaktionsgebühren-Ersparnis pro Euro Umsatz. Alle Werte passen sich dem gewählten Abrechnungszeitraum oben an.</p>
 
-  <!-- Shopify Payments Section -->
-  <div style="margin-bottom:12px;">
-    <div style="display:inline-flex; align-items:center; gap:10px; background:rgba(0,212,160,0.08); border:1px solid rgba(0,212,160,0.2); border-radius:8px; padding:10px 18px; margin-bottom:20px;">
-      <span style="font-family:'DM Mono',monospace; font-size:11px; letter-spacing:2px; text-transform:uppercase; color:var(--accent);">Shopify Payments</span>
-      <span style="font-size:12px; color:var(--muted);">Kreditkarte direkt über Shopify — keine zusätzliche Drittanbieter-Gebühr</span>
-    </div>
+  <!-- ── Shopify Payments ── -->
+  <div style="display:inline-flex; align-items:center; gap:10px; background:rgba(0,212,160,.08); border:1px solid rgba(0,212,160,.2); border-radius:8px; padding:10px 18px; margin-bottom:20px;">
+    <span style="font-family:'DM Mono',monospace; font-size:11px; letter-spacing:2px; text-transform:uppercase; color:var(--accent);">Shopify Payments</span>
+    <span style="font-size:12px; color:var(--muted);">Kreditkarte direkt über Shopify — keine zusätzliche Drittanbieter-Gebühr</span>
   </div>
+
   <table class="breakeven-table" style="margin-bottom:40px;">
     <thead>
-      <tr>
-        <th>Upgrade</th>
-        <th>Break-even Umsatz / Monat</th>
-        <th>Logik & Details</th>
-      </tr>
+      <tr><th>Upgrade</th><th>Break-even Umsatz / Monat</th><th>Logik & Details</th></tr>
     </thead>
     <tbody>
       <tr>
         <td style="vertical-align:middle;">
-          <div class="upgrade-arrow">
-            <span class="arrow-from">Basic</span>
-            <span class="arrow-sym">→</span>
-            <span class="arrow-to">Grow</span>
-          </div>
-          <div style="font-size:12px; color:var(--muted); margin-top:6px;">+41 €/Monat</div>
+          <div class="upgrade-arrow"><span class="arrow-from">Basic</span><span class="arrow-sym">→</span><span class="arrow-to">Grow</span></div>
+          <div style="font-size:12px; color:var(--muted); margin-top:6px;" id="sp-b2g-diff-lbl">+41 €/Monat</div>
         </td>
         <td>
-          <div class="breakeven-amount online">≈ 13.667 €</div>
-          <div class="calc-detail">41 € ÷ 0,3% = 13.667 €</div>
-          <div class="savings-chip">danach: +3 € Ersparnis je 1.000 € Umsatz</div>
+          <div class="breakeven-amount" id="sp-b2g-be">≈ 13.667 €</div>
+          <div class="calc-detail" id="sp-b2g-calc">41 € ÷ 0,3% = 13.667 €</div>
+          <div class="savings-chip">danach: +3 € je 1.000 € Umsatz</div>
         </td>
         <td style="font-size:13px; color:#ccc;">
-          Rate sinkt von 2,1% auf 1,8% (Δ = 0,3%). Der Fixkostenzuschlag (€0,30/Transaktion) bleibt gleich – relevant bei vielen Kleintransaktionen.<br>
-          <span style="color:var(--muted); font-size:12px;">Bei ø 50 €/Order: 273 Orders/Monat = Break-even</span>
+          Rate sinkt von 2,1% auf 1,8% (Δ = 0,3%). Der €0,30-Fixbetrag/Transaktion bleibt gleich.<br>
+          <span style="color:var(--muted); font-size:12px;">Bei ø 50 €/Order: <span id="sp-b2g-orders">273</span> Orders/Monat = Break-even</span>
         </td>
       </tr>
-      <tr style="border-top: 2px solid var(--border);">
+      <tr style="border-top:2px solid var(--border);">
         <td style="vertical-align:middle;">
-          <div class="upgrade-arrow">
-            <span class="arrow-from">Grow</span>
-            <span class="arrow-sym">→</span>
-            <span class="arrow-to">Advanced</span>
-          </div>
-          <div style="font-size:12px; color:var(--muted); margin-top:6px;">+223 €/Monat</div>
+          <div class="upgrade-arrow"><span class="arrow-from">Grow</span><span class="arrow-sym">→</span><span class="arrow-to">Advanced</span></div>
+          <div style="font-size:12px; color:var(--muted); margin-top:6px;" id="sp-g2a-diff-lbl">+223 €/Monat</div>
         </td>
         <td>
-          <div class="breakeven-amount online">≈ 111.500 €</div>
-          <div class="calc-detail">223 € ÷ 0,2% = 111.500 €</div>
-          <div class="savings-chip">danach: +2 € Ersparnis je 1.000 € Umsatz</div>
+          <div class="breakeven-amount" id="sp-g2a-be">≈ 111.500 €</div>
+          <div class="calc-detail" id="sp-g2a-calc">223 € ÷ 0,2% = 111.500 €</div>
+          <div class="savings-chip">danach: +2 € je 1.000 € Umsatz</div>
         </td>
         <td style="font-size:13px; color:#ccc;">
-          Rate sinkt von 1,8% auf 1,6% (Δ = 0,2%). Erst bei deutlich sechsstelligem Monatsumsatz trägt sich das Upgrade durch Card Rates allein. Häufig sind andere Gründe entscheidend (Lokalisierung, mehr Staff-Accounts).
+          Rate sinkt von 1,8% auf 1,6% (Δ = 0,2%). Erst bei deutlich sechsstelligem Monatsumsatz trägt sich das Upgrade durch Card Rates allein — oft sind Lokalisierung oder Staff-Accounts der eigentliche Treiber.
         </td>
       </tr>
-      <tr style="border-top: 2px solid var(--border);">
+      <tr style="border-top:2px solid var(--border);">
         <td style="vertical-align:middle;">
-          <div class="upgrade-arrow">
-            <span class="arrow-from">Advanced</span>
-            <span class="arrow-sym">→</span>
-            <span class="arrow-to">Plus</span>
-          </div>
-          <div style="font-size:12px; color:var(--muted); margin-top:6px;">+1.811 €/Monat</div>
+          <div class="upgrade-arrow"><span class="arrow-from">Advanced</span><span class="arrow-sym">→</span><span class="arrow-to">Plus</span></div>
+          <div style="font-size:12px; color:var(--muted); margin-top:6px;" id="sp-a2p-diff-lbl">+1.811 €/Monat</div>
         </td>
         <td>
           <div class="breakeven-amount" style="color:var(--plus);">Individuell</div>
           <div class="calc-detail">Rate wird verhandelt</div>
-          <div class="savings-chip" style="border-color:rgba(74,158,255,0.3); color:var(--plus); background:rgba(74,158,255,0.08);">Richtwert: ~1–2 Mio. € / Monat</div>
+          <div class="savings-chip" style="border-color:rgba(74,158,255,.3); color:var(--plus); background:rgba(74,158,255,.08);">Richtwert: ~1–2 Mio. €/Monat</div>
         </td>
         <td style="font-size:13px; color:#ccc;">
-          Shopify verhandelt individuelle Raten für Plus-Kunden. Das Upgrade ist weniger durch Gebühren, mehr durch Funktionen (Checkout-Customizing, B2B, unbegrenzte Accounts) motiviert.
+          Shopify verhandelt individuelle Raten für Plus-Kunden. Das Upgrade ist weniger durch Gebühren, mehr durch Funktionen motiviert: Checkout-Customizing, B2B, unbegrenzte Accounts.
         </td>
       </tr>
     </tbody>
   </table>
 
-  <!-- 3rd Party Payments Section -->
-  <div style="margin-bottom:12px;">
-    <div style="display:inline-flex; align-items:center; gap:10px; background:rgba(245,158,11,0.08); border:1px solid rgba(245,158,11,0.25); border-radius:8px; padding:10px 18px; margin-bottom:20px;">
-      <span style="font-family:'DM Mono',monospace; font-size:11px; letter-spacing:2px; text-transform:uppercase; color:#f59e0b;">3rd Party Payment Providers</span>
-      <span style="font-size:12px; color:var(--muted);">z.B. Klarna, Mollie, Stripe ohne Shopify Payments</span>
-    </div>
+  <!-- ── 3rd Party Providers ── -->
+  <div style="display:inline-flex; align-items:center; gap:10px; background:rgba(245,158,11,.08); border:1px solid rgba(245,158,11,.25); border-radius:8px; padding:10px 18px; margin-bottom:20px;">
+    <span style="font-family:'DM Mono',monospace; font-size:11px; letter-spacing:2px; text-transform:uppercase; color:#f59e0b;">3rd Party Payment Providers</span>
+    <span style="font-size:12px; color:var(--muted);">z.B. Klarna, Mollie, Stripe ohne Shopify Payments</span>
   </div>
 
-  <!-- CRITICAL PayPal Note -->
-  <div style="background:rgba(0,212,160,0.05); border:1px solid rgba(0,212,160,0.25); border-radius:10px; padding:20px 24px; margin-bottom:24px;">
+  <!-- PayPal note -->
+  <div style="background:rgba(0,212,160,.05); border:1px solid rgba(0,212,160,.25); border-radius:10px; padding:20px 24px; margin-bottom:24px;">
     <div style="display:flex; gap:12px; align-items:flex-start;">
-      <div style="background:rgba(0,212,160,0.15); border-radius:50%; width:32px; height:32px; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:16px; margin-top:2px;">✓</div>
+      <div style="background:rgba(0,212,160,.15); border-radius:50%; width:32px; height:32px; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:16px; margin-top:2px;">✓</div>
       <div>
         <div style="font-weight:600; color:#fff; font-size:15px; margin-bottom:8px;">PayPal & Drittanbieter-Gebühren — offizielle Shopify-Regelung (help.shopify.com/de)</div>
         <div style="font-size:13px; color:#ccc; line-height:1.85;">
-
           <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:14px;">
-            <div style="background:rgba(0,212,160,0.06); border:1px solid rgba(0,212,160,0.2); border-radius:8px; padding:14px;">
+            <div style="background:rgba(0,212,160,.06); border:1px solid rgba(0,212,160,.2); border-radius:8px; padding:14px;">
               <div style="font-family:'DM Mono',monospace; font-size:10px; letter-spacing:2px; color:var(--accent); text-transform:uppercase; margin-bottom:8px;">Basic / Grow / Advanced</div>
               <div style="color:#ccc; font-size:13px; line-height:1.7;">
                 Wenn <strong style="color:#fff;">Shopify Payments aktiviert</strong> ist, sind PayPal-Zahlungen von der Drittanbieter-Transaktionsgebühr <strong style="color:var(--accent);">ausgenommen</strong>.<br><br>
-                Ihr zahlt nur:<br>
-                → Die normale Shopify-Payments-Card-Rate (2,1% / 1,8% / 1,6% + 0,30 €)<br>
-                → Die PayPal-eigene Händlergebühr (~2,99% + 0,35 €)<br>
-                → <strong style="color:var(--accent);">Keine</strong> zusätzliche Shopify-Drittanbieter-Gebühr (0%)
+                → Shopify-Payments-Card-Rate (2,1% / 1,8% / 1,6% + 0,30 €)<br>
+                → PayPal-eigene Händlergebühr (~2,99% + 0,35 €)<br>
+                → <strong style="color:var(--accent);">Keine</strong> zusätzliche Shopify-Drittanbieter-Gebühr
               </div>
             </div>
-            <div style="background:rgba(74,158,255,0.06); border:1px solid rgba(74,158,255,0.2); border-radius:8px; padding:14px;">
+            <div style="background:rgba(74,158,255,.06); border:1px solid rgba(74,158,255,.2); border-radius:8px; padding:14px;">
               <div style="font-family:'DM Mono',monospace; font-size:10px; letter-spacing:2px; color:var(--plus); text-transform:uppercase; margin-bottom:8px;">Shopify Plus</div>
               <div style="color:#ccc; font-size:13px; line-height:1.7;">
-                Geht noch weiter: Bei Shopify Payments als primärem Gateway entfallen Drittanbieter-Gebühren für <strong style="color:#fff;">alle</strong> Zahlungsmethoden — einschließlich aller PayPal-Integrationen und weiterer Anbieter.
+                Bei Shopify Payments als primärem Gateway entfallen Drittanbieter-Gebühren für <strong style="color:#fff;">alle</strong> Zahlungsmethoden — einschließlich aller PayPal-Integrationen und weiterer Anbieter.
               </div>
             </div>
           </div>
-
-          <div style="background:rgba(255,107,53,0.08); border:1px solid rgba(255,107,53,0.2); border-radius:6px; padding:12px 14px; font-size:12px;">
-            <strong style="color:var(--accent2);">⚠ Wichtig:</strong> Die Ausnahme gilt nur, wenn Shopify Payments <em>aktiviert</em> ist. Wer ausschließlich PayPal ohne Shopify Payments nutzt, zahlt die volle Drittanbieter-Gebühr (2% / 1% / 0,6%) <em>zusätzlich</em> zur PayPal-Händlergebühr — im Basic-Plan bis zu ~5% Gesamtgebühr pro Transaktion.
+          <div style="background:rgba(255,107,53,.08); border:1px solid rgba(255,107,53,.2); border-radius:6px; padding:12px 14px; font-size:12px;">
+            <strong style="color:var(--accent2);">⚠ Wichtig:</strong> Die Ausnahme gilt nur, wenn Shopify Payments <em>aktiviert</em> ist. Ohne Shopify Payments fallen volle Drittanbieter-Gebühren an (2% / 1% / 0,6%) — im Basic-Plan bis zu ~5% Gesamtgebühr pro Transaktion.
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <div style="background:rgba(245,158,11,0.05); border:1px solid rgba(245,158,11,0.15); border-radius:8px; padding:14px 20px; margin-bottom:20px; font-size:13px; color:#ccc;">
-    Die folgende Tabelle gilt für echte Drittanbieter ohne PayPal-Ausnahme: z.B. Klarna (eigenständig), Mollie, Amazon Pay, oder jede Situation wo Shopify Payments <em>nicht</em> aktiviert ist.
+  <div style="background:rgba(245,158,11,.05); border:1px solid rgba(245,158,11,.15); border-radius:8px; padding:14px 20px; margin-bottom:20px; font-size:13px; color:#ccc;">
+    Die folgende Tabelle gilt für Anbieter ohne PayPal-Ausnahme: z.B. Klarna (eigenständig), Mollie, Amazon Pay, oder wenn Shopify Payments <em>nicht</em> aktiviert ist.
   </div>
+
   <table class="breakeven-table">
     <thead>
-      <tr>
-        <th>Upgrade</th>
-        <th>Break-even Umsatz / Monat</th>
-        <th>Logik & Details</th>
-      </tr>
+      <tr><th>Upgrade</th><th>Break-even Umsatz / Monat</th><th>Logik & Details</th></tr>
     </thead>
     <tbody>
       <tr>
         <td style="vertical-align:middle;">
-          <div class="upgrade-arrow">
-            <span class="arrow-from">Basic</span>
-            <span class="arrow-sym">→</span>
-            <span class="arrow-to">Grow</span>
-          </div>
-          <div style="font-size:12px; color:var(--muted); margin-top:6px;">+41 €/Monat</div>
+          <div class="upgrade-arrow"><span class="arrow-from">Basic</span><span class="arrow-sym">→</span><span class="arrow-to">Grow</span></div>
+          <div style="font-size:12px; color:var(--muted); margin-top:6px;" id="tp-b2g-diff-lbl">+41 €/Monat</div>
         </td>
         <td>
-          <div class="breakeven-amount" style="color:#f59e0b;">≈ 4.100 €</div>
-          <div class="calc-detail">41 € ÷ 1,0% = 4.100 €</div>
-          <div class="savings-chip" style="border-color:rgba(245,158,11,0.3); color:#f59e0b; background:rgba(245,158,11,0.08);">danach: +10 € Ersparnis je 1.000 € Umsatz</div>
+          <div class="breakeven-amount" style="color:#f59e0b;" id="tp-b2g-be">≈ 4.100 €</div>
+          <div class="calc-detail" id="tp-b2g-calc">41 € ÷ 1,0% = 4.100 €</div>
+          <div class="savings-chip" style="border-color:rgba(245,158,11,.3); color:#f59e0b; background:rgba(245,158,11,.08);">danach: +10 € je 1.000 € Umsatz</div>
         </td>
         <td style="font-size:13px; color:#ccc;">
-          Drittanbieter-Gebühr sinkt von 2,0% auf 1,0% (Δ = 1,0%). Stärkster Hebel im gesamten Vergleich. Wer z.B. Klarna standalone oder Mollie ohne Shopify Payments nutzt, amortisiert das Upgrade bereits ab ~4.100 € Monatsumsatz.<br>
-          <span style="color:var(--muted); font-size:12px;">Bei 20.000 € Umsatz/Monat: 200 € Ersparnis → ROI +159 €/Monat</span>
+          Gebühr sinkt von 2,0% auf 1,0% (Δ = 1,0%). Stärkster Hebel im gesamten Vergleich.<br>
+          <span style="color:var(--muted); font-size:12px;" id="tp-b2g-roi">Bei 20.000 € Umsatz/Monat: 200 € Ersparnis → ROI +159 €/Monat</span>
         </td>
       </tr>
-      <tr style="border-top: 2px solid var(--border);">
+      <tr style="border-top:2px solid var(--border);">
         <td style="vertical-align:middle;">
-          <div class="upgrade-arrow">
-            <span class="arrow-from">Grow</span>
-            <span class="arrow-sym">→</span>
-            <span class="arrow-to">Advanced</span>
-          </div>
-          <div style="font-size:12px; color:var(--muted); margin-top:6px;">+223 €/Monat</div>
+          <div class="upgrade-arrow"><span class="arrow-from">Grow</span><span class="arrow-sym">→</span><span class="arrow-to">Advanced</span></div>
+          <div style="font-size:12px; color:var(--muted); margin-top:6px;" id="tp-g2a-diff-lbl">+223 €/Monat</div>
         </td>
         <td>
-          <div class="breakeven-amount" style="color:#f59e0b;">≈ 55.750 €</div>
-          <div class="calc-detail">223 € ÷ 0,4% = 55.750 €</div>
-          <div class="savings-chip" style="border-color:rgba(245,158,11,0.3); color:#f59e0b; background:rgba(245,158,11,0.08);">+4 € Ersparnis je 1.000 € Umsatz</div>
+          <div class="breakeven-amount" style="color:#f59e0b;" id="tp-g2a-be">≈ 55.750 €</div>
+          <div class="calc-detail" id="tp-g2a-calc">223 € ÷ 0,4% = 55.750 €</div>
+          <div class="savings-chip" style="border-color:rgba(245,158,11,.3); color:#f59e0b; background:rgba(245,158,11,.08);">+4 € je 1.000 € Umsatz</div>
         </td>
         <td style="font-size:13px; color:#ccc;">
-          Rate sinkt von 1,0% auf 0,6% (Δ = 0,4%). Ab ~56k€ Drittanbieter-Monatsumsatz rechnet sich Advanced allein durch die Gebühren.<br>
-          <span style="color:var(--muted); font-size:12px;">Bei 100.000 € Umsatz/Monat: 400 € Ersparnis → ROI +177 €/Monat</span>
+          Rate sinkt von 1,0% auf 0,6% (Δ = 0,4%).<br>
+          <span style="color:var(--muted); font-size:12px;" id="tp-g2a-roi">Bei 100.000 € Umsatz/Monat: 400 € Ersparnis → ROI +177 €/Monat</span>
         </td>
       </tr>
-      <tr style="border-top: 2px solid var(--border);">
+      <tr style="border-top:2px solid var(--border);">
         <td style="vertical-align:middle;">
-          <div class="upgrade-arrow">
-            <span class="arrow-from">Advanced</span>
-            <span class="arrow-sym">→</span>
-            <span class="arrow-to">Plus</span>
-          </div>
-          <div style="font-size:12px; color:var(--muted); margin-top:6px;">+1.811 €/Monat</div>
+          <div class="upgrade-arrow"><span class="arrow-from">Advanced</span><span class="arrow-sym">→</span><span class="arrow-to">Plus</span></div>
+          <div style="font-size:12px; color:var(--muted); margin-top:6px;" id="tp-a2p-diff-lbl">+1.811 €/Monat</div>
         </td>
         <td>
           <div class="breakeven-amount" style="color:var(--plus);">Individuell</div>
           <div class="calc-detail">Rate & Gebühren werden verhandelt</div>
-          <div class="savings-chip" style="border-color:rgba(74,158,255,0.3); color:var(--plus); background:rgba(74,158,255,0.08);">Richtwert: ~450k€+ Drittanbieter/Monat</div>
+          <div class="savings-chip" style="border-color:rgba(74,158,255,.3); color:var(--plus); background:rgba(74,158,255,.08);">Richtwert: ~450k€+ Drittanbieter/Monat</div>
         </td>
         <td style="font-size:13px; color:#ccc;">
-          Plus-Kunden können individuelle Konditionen verhandeln. Bei dominantem Drittanbieter-Anteil lohnt sich das Gespräch mit Shopify ab einem Jahres-Umsatz von ca. 5 Mio. €.
+          Plus-Kunden können individuelle Konditionen verhandeln. Ab ca. 5 Mio. € Jahresumsatz lohnt sich das Gespräch mit Shopify.
         </td>
       </tr>
     </tbody>
   </table>
 
   <div class="note-box" style="margin-top:30px;">
-    <strong>⚠ Recherche-Stand 19. Februar 2026 — Wichtige Hinweise zur Aktualität:</strong><br><br>
-    <strong style="color:#fff;">PayPal-Regelung (verifiziert, Quelle: help.shopify.com/de):</strong> Bei aktiviertem Shopify Payments ist PayPal von der Drittanbieter-Transaktionsgebühr ausgenommen — gilt für <strong style="color:#fff;">alle Pläne</strong> (Basic/Grow/Advanced/Plus). Shopify Plus geht noch weiter: dort entfallen Drittanbieter-Gebühren für alle Zahlungsmethoden. Die Drittanbieter-Tabelle in Abschnitt 02 gilt daher nur für andere externe Anbieter (Klarna standalone, Mollie etc.) oder wenn Shopify Payments nicht aktiviert ist.
+    <strong>⚠ Recherche-Stand 19. Februar 2026:</strong><br><br>
+    <strong style="color:#fff;">PayPal-Regelung (verifiziert, Quelle: help.shopify.com/de):</strong> Bei aktiviertem Shopify Payments ist PayPal von der Drittanbieter-Transaktionsgebühr ausgenommen — gilt für <strong style="color:#fff;">alle Pläne</strong> (Basic/Grow/Advanced). Shopify Plus geht noch weiter: dort entfallen Drittanbieter-Gebühren für alle Zahlungsmethoden. Die Drittanbieter-Tabelle gilt daher nur für andere externe Anbieter (Klarna standalone, Mollie etc.) oder wenn Shopify Payments nicht aktiviert ist.
   </div>
 </section>
 
-<!-- FEATURE UPGRADE ANALYSIS -->
+<!-- ═══════════════════════════════════════════════════
+     03 — FEATURE ANALYSE
+═══════════════════════════════════════════════════ -->
 <section>
   <div class="section-subtitle">03 — Feature-Analyse</div>
   <div class="section-title">Was bekomme ich wirklich dazu?</div>
 
   <div class="upgrade-block b2g">
-    <div class="upgrade-block-title">Basic → Grow: +41 €/Monat</div>
+    <div class="upgrade-block-title" id="feat-b2g-title">Basic → Grow: +41 €/Monat</div>
     <div class="upgrade-block-sub">Für wen lohnt sich das abseits der Card Rates?</div>
     <div class="feature-grid">
       <div class="feature-item">
         <div class="feat-icon new">+</div>
         <div class="feat-text">
           <strong>5 Mitarbeiter-Accounts</strong>
-          <span>Basic hat keine Staff-Accounts. Sobald du ein Team hast (VA, Kundenservice, Fulfillment), ist dies essenziell. Alternative wäre bezahlte Drittanbieter-Apps (~15–30 €/Monat pro Account).</span>
+          <span>Basic hat keine Staff-Accounts. Sobald ein Team existiert (VA, Kundenservice, Fulfillment), essenziell. Drittanbieter-Apps kosten ~15–30 €/Monat pro Account.</span>
         </div>
       </div>
       <div class="feature-item">
         <div class="feat-icon up">↑</div>
         <div class="feat-text">
           <strong>Niedrigere Drittanbieter-Rate (2% → 1%)</strong>
-          <span>Wer PayPal, Klarna oder Sofort nutzt, spart schon ab 4.100 € Monatsumsatz. Das ist der stärkste finanzielle Hebel dieses Upgrades.</span>
+          <span>Für Klarna, Mollie etc. ohne Shopify Payments: schon ab <span id="feat-b2g-3p">4.100 €</span> Monatsumsatz spart sich das Upgrade. Stärkster finanzieller Hebel.</span>
         </div>
       </div>
       <div class="feature-item">
         <div class="feat-icon up">↑</div>
         <div class="feat-text">
           <strong>Bessere Credits-Grenze (4.500 → 6.500 €)</strong>
-          <span>Mehr Shopify-Guthaben durch das 1%-Cashback-Programm. Wer viel verkauft, bekommt mehr zurück.</span>
+          <span>Mehr Shopify-Guthaben durch das 1%-Cashback-Programm.</span>
         </div>
       </div>
       <div class="feature-item">
         <div class="feat-icon up">↑</div>
         <div class="feat-text">
-          <strong>POS-Gerät nutzbar</strong>
-          <span>In-Person-Selling per POS Device ist in beiden verfügbar – kein Unterschied hier. Beide Pakete bieten 10 Lagerstandorte.</span>
+          <strong>Erweiterte Berichte & Analytics</strong>
+          <span>Detailliertere Verkaufs-, Kunden- und Lagerberichte für datenbasierte Entscheidungen.</span>
         </div>
       </div>
     </div>
-    <div style="margin-top:20px; padding:16px; background:rgba(52,211,153,0.05); border:1px solid rgba(52,211,153,0.1); border-radius:8px;">
+    <div style="margin-top:20px; padding:16px; background:rgba(52,211,153,.05); border:1px solid rgba(52,211,153,.1); border-radius:8px;">
       <div style="font-size:12px; font-family:'DM Mono',monospace; color:var(--muted); margin-bottom:6px;">FAZIT — BASIC → GROW</div>
-      <div style="font-size:14px; color:#ccc;">Lohnt sich sobald: (a) du 2+ Mitarbeiter im Shop arbeitest ODER (b) du Drittanbieter-Zahlungen ab ~4.100 €/Monat nutzt ODER (c) dein Online-Umsatz ~13.700 €/Monat übersteigt. Wer alleine arbeitet und nur Shopify Payments nutzt, kann länger bei Basic bleiben.</div>
+      <div style="font-size:14px; color:#ccc;" id="fazit-b2g">Lohnt sich sobald: (a) 2+ Mitarbeiter im Shop, (b) Drittanbieter-Zahlungen ab ~4.100 €/Monat oder (c) Online-Umsatz über ~13.667 €/Monat. Wer alleine arbeitet und nur Shopify Payments nutzt, kann länger bei Basic bleiben.</div>
     </div>
   </div>
 
   <div class="upgrade-block g2a">
-    <div class="upgrade-block-title">Grow → Advanced: +223 €/Monat</div>
+    <div class="upgrade-block-title" id="feat-g2a-title">Grow → Advanced: +223 €/Monat</div>
     <div class="upgrade-block-sub">Der große Sprung – welche Features rechtfertigen den Preis?</div>
     <div class="feature-grid">
       <div class="feature-item">
         <div class="feat-icon new">+</div>
         <div class="feat-text">
           <strong>Lokale Storefronts nach Markt</strong>
-          <span>Shopify Markets Pro: mehrsprachige, mehrwährungsfähige Shops für verschiedene Länder. Entscheidend für internationalen Rollout (z.B. DE/AT/CH oder EU-Expansion).</span>
+          <span>Länderspezifische Preise, Zölle & Einfuhrsteuerberechnung am Checkout, bis zu 50 Märkte. Entscheidend für internationalen Rollout (z.B. DE/AT/CH oder EU-Expansion).</span>
         </div>
       </div>
       <div class="feature-item">
         <div class="feat-icon new">+</div>
         <div class="feat-text">
           <strong>15 Staff-Accounts (vs. 5)</strong>
-          <span>Für Teams mit Logistik, Marketing, Support, mehreren Admin-Rollen. 10 zusätzliche Accounts — bei Drittanbieter-Apps würde das 150–300 €/Monat extra kosten.</span>
+          <span>Für Teams mit Logistik, Marketing, Support. 10 zusätzliche Accounts — bei Drittanbieter-Apps 150–300 €/Monat extra.</span>
         </div>
       </div>
       <div class="feature-item">
-        <div class="feat-icon up">↑</div>
+        <div class="feat-icon new">+</div>
         <div class="feat-text">
-          <strong>Enhanced 24/7 Support</strong>
-          <span>Priorisierter Chat-Support. Relevanter bei hohem Umsatz, wo Ausfallzeiten teuer sind — bei 100k€ Monatsumsatz kostet jede Stunde Ausfall Hunderte Euro.</span>
+          <strong>Benutzerdefinierte Berichte</strong>
+          <span>Eigener Report-Builder für Analysen nach Kanal, Cohort, Produkt-Lifecycle. Ersetzt teure BI-Tools.</span>
         </div>
       </div>
       <div class="feature-item">
         <div class="feat-icon up">↑</div>
         <div class="feat-text">
           <strong>Niedrigere Card Rates & mehr Credits</strong>
-          <span>Online: 1,6% statt 1,8%. Drittanbieter: 0,6% statt 1,0%. Break-even für Drittanbieter: ~55k€/Monat. Credits-Limit: 8.500 €.</span>
+          <span>Online: 1,6% statt 1,8%. Drittanbieter: 0,6% statt 1,0%. Credits-Limit: 8.500 €. Break-even Online: ~<span id="feat-g2a-sp">111.500 €</span>/Monat.</span>
         </div>
       </div>
     </div>
-    <div style="margin-top:20px; padding:16px; background:rgba(5,150,105,0.05); border:1px solid rgba(5,150,105,0.15); border-radius:8px;">
+    <div style="margin-top:20px; padding:16px; background:rgba(5,150,105,.05); border:1px solid rgba(5,150,105,.15); border-radius:8px;">
       <div style="font-size:12px; font-family:'DM Mono',monospace; color:var(--muted); margin-bottom:6px;">FAZIT — GROW → ADVANCED</div>
-      <div style="font-size:14px; color:#ccc;">Lohnt sich bei: (a) Expansion in mehrere Märkte/Länder, (b) Team mit 6–15 Personen, (c) Online-Umsatz über ~110k€/Monat, (d) Drittanbieter-Umsatz über ~55k€/Monat. Viele Händler wählen Advanced primär wegen der internationalen Storefronts, nicht der Card Rates.</div>
+      <div style="font-size:14px; color:#ccc;" id="fazit-g2a">Lohnt sich bei: (a) Expansion in mehrere Länder/Märkte, (b) Team mit 6–15 Personen, (c) Online-Umsatz über ~111.500 €/Monat, (d) Drittanbieter-Umsatz über ~55.750 €/Monat. Viele Händler wählen Advanced primär wegen der internationalen Storefronts.</div>
     </div>
   </div>
 
   <div class="upgrade-block a2p">
-    <div class="upgrade-block-title">Advanced → Plus: +1.811 €/Monat</div>
+    <div class="upgrade-block-title" id="feat-a2p-title">Advanced → Plus: +1.811 €/Monat</div>
     <div class="upgrade-block-sub">Enterprise-Features — weit mehr als Gebührenoptimierung</div>
     <div class="feature-grid">
       <div class="feature-item">
         <div class="feat-icon new">+</div>
         <div class="feat-text">
           <strong>Fully Customizable Checkout</strong>
-          <span>Individuelle Checkout-Logik, eigene UI, komplexe Rabattregeln. Entscheidend für Conversion-Optimierung bei hohem Traffic — schon 0,1% mehr CVR = Tausende Euro bei 1M€ Umsatz.</span>
+          <span>Individuelle Checkout-Logik, eigene UI, komplexe Rabattregeln. Schon 0,1% mehr CVR = Tausende Euro bei 1M€ Umsatz.</span>
         </div>
       </div>
       <div class="feature-item">
         <div class="feat-icon new">+</div>
         <div class="feat-text">
           <strong>B2B / Wholesale nativ</strong>
-          <span>Preislisten, Nettobedingungen, Kundengruppen für Großhändler direkt in Shopify. Vermeidet kostspielige B2B-Apps (200–500 €/Monat). Für Händler mit Wiederverkäufernetzwerk unverzichtbar.</span>
+          <span>Preislisten, Nettobedingungen, Kundengruppen direkt in Shopify. Vermeidet B2B-Apps (200–500 €/Monat).</span>
         </div>
       </div>
       <div class="feature-item">
         <div class="feat-icon new">+</div>
         <div class="feat-text">
           <strong>200 Inventory Locations & POS Pro</strong>
-          <span>Für Multi-Location-Retail mit dutzenden Filialen. Bis zu 200 POS Pro Standorte statt 10.</span>
+          <span>Für Multi-Location-Retail mit dutzenden Filialen.</span>
         </div>
       </div>
       <div class="feature-item">
         <div class="feat-icon up">↑</div>
         <div class="feat-text">
           <strong>Priority Phone Support + Unlimitierte Accounts</strong>
-          <span>Direkter Ansprechpartner bei Shopify. Unlimitierte Staff-Accounts für große Ops-Teams. Kritisch bei Enterprise-Betrieb.</span>
+          <span>Direkter Ansprechpartner bei Shopify. Unlimitierte Staff-Accounts für große Ops-Teams.</span>
         </div>
       </div>
     </div>
-    <div style="margin-top:20px; padding:16px; background:rgba(74,158,255,0.05); border:1px solid rgba(74,158,255,0.15); border-radius:8px;">
+    <div style="margin-top:20px; padding:16px; background:rgba(74,158,255,.05); border:1px solid rgba(74,158,255,.15); border-radius:8px;">
       <div style="font-size:12px; font-family:'DM Mono',monospace; color:var(--muted); margin-bottom:6px;">FAZIT — ADVANCED → PLUS</div>
-      <div style="font-size:14px; color:#ccc;">Lohnt sich bei: (a) Jahresumsatz ab ~1–2 Mio. €, (b) aktivem B2B/Wholesale-Geschäft, (c) Bedarf nach Custom Checkout, (d) Multi-Location-POS mit 10+ Filialen. Hier ist nicht die Card Rate der Treiber — sondern operative Skalierbarkeit und Wachstumsinfrastruktur.</div>
+      <div style="font-size:14px; color:#ccc;">Lohnt sich bei: (a) Jahresumsatz ab ~1–2 Mio. €, (b) aktivem B2B/Wholesale-Geschäft, (c) Bedarf nach Custom Checkout, (d) Multi-Location-POS mit 10+ Filialen. Treiber ist nicht die Card Rate — sondern operative Skalierbarkeit.</div>
     </div>
   </div>
 </section>
 
-<!-- WHO IS IT FOR -->
+<!-- ═══════════════════════════════════════════════════
+     04 — PERSONA MATCHING
+═══════════════════════════════════════════════════ -->
 <section>
   <div class="section-subtitle">04 — Persona-Matching</div>
   <div class="section-title">Welches Paket passt zu wem?</div>
 
   <div class="who-grid">
     <div class="who-card">
-      <div class="who-card-title" style="color:var(--basic);">Basic — 25 €</div>
+      <div class="who-card-title" style="color:var(--basic);">Basic — <span id="who-basic">25 €</span>/Monat</div>
       <div class="who-item"><div class="who-dot" style="background:var(--basic)"></div>Solopreneure & Starter</div>
       <div class="who-item"><div class="who-dot" style="background:var(--basic)"></div>Umsatz unter 13.000 €/Monat</div>
       <div class="who-item"><div class="who-dot" style="background:var(--basic)"></div>Nur Shopify Payments, keine Drittanbieter</div>
@@ -833,16 +879,16 @@
       <div class="who-item"><div class="who-dot" style="background:var(--basic)"></div>Nebenprojekt oder frühe Wachstumsphase</div>
     </div>
     <div class="who-card">
-      <div class="who-card-title" style="color:var(--grow);">Grow — 66 €</div>
+      <div class="who-card-title" style="color:var(--grow);">Grow — <span id="who-grow">66 €</span>/Monat</div>
       <div class="who-item"><div class="who-dot" style="background:var(--grow)"></div>Kleines Team (2–5 Personen)</div>
       <div class="who-item"><div class="who-dot" style="background:var(--grow)"></div>Umsatz 13.000–110.000 €/Monat</div>
-      <div class="who-item"><div class="who-dot" style="background:var(--grow)"></div>Drittanbieter ab 4.000 €/Monat Umsatz</div>
+      <div class="who-item"><div class="who-dot" style="background:var(--grow)"></div>Drittanbieter ab 4.000 €/Monat</div>
       <div class="who-item"><div class="who-dot" style="background:var(--grow)"></div>Wächst schnell, braucht VA/CS-Account</div>
       <div class="who-item"><div class="who-dot" style="background:var(--grow)"></div>Hauptsächlich D2C, ein Markt</div>
-      <div class="who-item"><div class="who-dot" style="background:var(--grow)"></div>POS + Online-Kombi</div>
+      <div class="who-item"><div class="who-dot" style="background:var(--grow)"></div>Shopify Payments + PayPal Kombi</div>
     </div>
     <div class="who-card">
-      <div class="who-card-title" style="color:#34d399;">Advanced — 289 €</div>
+      <div class="who-card-title" style="color:#34d399;">Advanced — <span id="who-advanced">289 €</span>/Monat</div>
       <div class="who-item"><div class="who-dot" style="background:#34d399"></div>Wachsendes Team (6–15 Personen)</div>
       <div class="who-item"><div class="who-dot" style="background:#34d399"></div>Umsatz 110.000–1.000.000 €/Monat</div>
       <div class="who-item"><div class="who-dot" style="background:#34d399"></div>Internationaler Rollout (EU, global)</div>
@@ -851,7 +897,7 @@
       <div class="who-item"><div class="who-dot" style="background:#34d399"></div>Hoher Drittanbieter-Zahlungsanteil</div>
     </div>
     <div class="who-card">
-      <div class="who-card-title" style="color:var(--plus);">Plus — 2.100 €</div>
+      <div class="who-card-title" style="color:var(--plus);">Plus — 2.100 €/Monat</div>
       <div class="who-item"><div class="who-dot" style="background:var(--plus)"></div>Großes Team, Enterprise-Struktur</div>
       <div class="who-item"><div class="who-dot" style="background:var(--plus)"></div>Umsatz über 1 Mio. €/Monat</div>
       <div class="who-item"><div class="who-dot" style="background:var(--plus)"></div>B2B / Wholesale notwendig</div>
@@ -862,44 +908,46 @@
   </div>
 </section>
 
-<!-- QUICK DECISION -->
+<!-- ═══════════════════════════════════════════════════
+     05 — ENTSCHEIDUNGSHILFE
+═══════════════════════════════════════════════════ -->
 <section style="border-bottom:none;">
   <div class="section-subtitle">05 — Entscheidungshilfe</div>
   <div class="section-title">Die wichtigsten Fragen vor dem Upgrade</div>
 
-  <div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px; margin-top:10px;">
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:10px;">
     <div style="background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:28px;">
-      <div style="font-family:'DM Mono',monospace; font-size:10px; letter-spacing:2px; color:var(--accent); text-transform:uppercase; margin-bottom:16px;">Basic → Grow: Stelle dir diese Fragen</div>
-      <div style="font-size:14px; color:#ccc; line-height:2;">
-        ✓ Habe ich 2 oder mehr Personen, die Admin-Zugang brauchen?<br>
-        ✓ Nutze ich PayPal, Klarna oder andere Drittanbieter?<br>
-        ✓ Liegt mein Monatsumsatz über 13.000 € (online) oder 4.000 € (Drittanbieter)?<br>
-        ✓ Spare ich durch das Upgrade mehr als die 41 € Differenz?
+      <div style="font-family:'DM Mono',monospace; font-size:10px; letter-spacing:2px; color:var(--accent); text-transform:uppercase; margin-bottom:16px;">Basic → Grow</div>
+      <div style="font-size:14px; color:#ccc; line-height:2.2;">
+        ✓ Habe ich 2+ Personen, die Admin-Zugang brauchen?<br>
+        ✓ Nutze ich Klarna, Mollie oder andere Drittanbieter ohne Shopify Payments?<br>
+        ✓ Liegt mein Monatsumsatz über <span id="q-b2g-sp" style="color:#fff; font-family:'DM Mono',monospace;">13.667 €</span> (online) oder <span id="q-b2g-tp" style="color:#fff; font-family:'DM Mono',monospace;">4.100 €</span> (Drittanbieter)?<br>
+        ✓ Spare ich mehr als die <span id="q-b2g-diff" style="color:var(--accent); font-family:'DM Mono',monospace;">41 €</span> Differenz?
       </div>
     </div>
     <div style="background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:28px;">
-      <div style="font-family:'DM Mono',monospace; font-size:10px; letter-spacing:2px; color:#34d399; text-transform:uppercase; margin-bottom:16px;">Grow → Advanced: Stelle dir diese Fragen</div>
-      <div style="font-size:14px; color:#ccc; line-height:2;">
+      <div style="font-family:'DM Mono',monospace; font-size:10px; letter-spacing:2px; color:#34d399; text-transform:uppercase; margin-bottom:16px;">Grow → Advanced</div>
+      <div style="font-size:14px; color:#ccc; line-height:2.2;">
         ✓ Will ich in weitere Länder/Märkte expandieren?<br>
         ✓ Habe ich mehr als 5 Staff-Mitarbeiter im Shop?<br>
-        ✓ Liegt mein Monatsumsatz über 110.000 € (online)?<br>
-        ✓ Habe ich hohe Drittanbieter-Umsätze über 55.000 €/Monat?
+        ✓ Liegt mein Monatsumsatz über <span id="q-g2a-sp" style="color:#fff; font-family:'DM Mono',monospace;">111.500 €</span> (online)?<br>
+        ✓ Habe ich Drittanbieter-Umsatz über <span id="q-g2a-tp" style="color:#fff; font-family:'DM Mono',monospace;">55.750 €</span>/Monat?
       </div>
     </div>
     <div style="background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:28px;">
-      <div style="font-family:'DM Mono',monospace; font-size:10px; letter-spacing:2px; color:var(--plus); text-transform:uppercase; margin-bottom:16px;">Advanced → Plus: Stelle dir diese Fragen</div>
-      <div style="font-size:14px; color:#ccc; line-height:2;">
+      <div style="font-family:'DM Mono',monospace; font-size:10px; letter-spacing:2px; color:var(--plus); text-transform:uppercase; margin-bottom:16px;">Advanced → Plus</div>
+      <div style="font-size:14px; color:#ccc; line-height:2.2;">
         ✓ Betreibe ich aktiv B2B- oder Wholesale-Geschäft?<br>
         ✓ Möchte ich den Checkout individuell anpassen?<br>
         ✓ Habe ich über 1 Mio. € Jahresumsatz?<br>
         ✓ Benötige ich mehr als 10 Lagerstandorte oder 200 POS?
       </div>
     </div>
-    <div style="background:var(--surface); border:1px solid rgba(255,107,53,0.2); border-radius:12px; padding:28px;">
+    <div style="background:var(--surface); border:1px solid rgba(255,107,53,.2); border-radius:12px; padding:28px;">
       <div style="font-family:'DM Mono',monospace; font-size:10px; letter-spacing:2px; color:var(--accent2); text-transform:uppercase; margin-bottom:16px;">Profi-Tipp: Hybride Berechnung</div>
       <div style="font-size:14px; color:#ccc; line-height:1.8;">
         Rechne immer <strong style="color:#fff;">Gebührenersparnis + Kosten für ersetzte Apps</strong> gegen die Paketdifferenz.<br><br>
-        Beispiel: Du nutzt eine Staff-Account-App für 30 €/Monat → effektive Kostendifferenz Basic→Grow nur noch 11 €/Monat. Break-even sinkt auf ~3.700 € Umsatz.
+        Beispiel: Du nutzt eine Staff-App für 30 €/Monat → effektive Kostendifferenz Basic→Grow nur noch <span id="q-hybrid-eff" style="color:var(--accent); font-family:'DM Mono',monospace;">11 €</span>/Monat. Break-even sinkt auf ~<span id="q-hybrid-be" style="color:var(--accent); font-family:'DM Mono',monospace;">1.100 €</span> Umsatz.
       </div>
     </div>
   </div>
@@ -907,9 +955,158 @@
   <div style="margin-top:30px; padding:24px 30px; background:var(--surface2); border:1px solid var(--border); border-radius:12px; text-align:center;">
     <div style="font-family:'DM Mono',monospace; font-size:10px; letter-spacing:2px; color:var(--muted); text-transform:uppercase; margin-bottom:10px;">Bottom Line</div>
     <div style="font-family:'Playfair Display',serif; font-size:22px; font-weight:700; color:#fff; margin-bottom:10px;">Das Upgrade zahlt sich fast immer durch eine Kombination aus Gebührenersparnis und Feature-Mehrwert — nicht durch einen Faktor allein.</div>
-    <div style="font-size:14px; color:var(--muted);">Nutze den Break-even-Kalkulator oben für die Gebühren und prüfe parallel, welche Features du aktuell über teure Drittanbieter-Apps kaufst.</div>
+    <div style="font-size:14px; color:var(--muted);">Nutze die Break-even-Werte oben als Orientierung und prüfe parallel, welche Features du aktuell über teure Drittanbieter-Apps kaufst.</div>
   </div>
 </section>
+
+<!-- ═══════════════════════════════════════════════════
+     JAVASCRIPT
+═══════════════════════════════════════════════════ -->
+<script>
+  // ── Preisdaten ────────────────────────────
+  const P = {
+    yearly:  { basic: 25,  grow: 66,  advanced: 289 },
+    monthly: { basic: 33,  grow: 88,  advanced: 384 }
+  };
+
+  // Transaktions-Deltas — ändern sich nicht mit Billing-Period
+  const D = { sp_b2g: .003, sp_g2a: .002, tp_b2g: .010, tp_g2a: .004 };
+
+  let mode = 'yearly';
+
+  // ── Toggle initialisieren ─────────────────
+  window.addEventListener('DOMContentLoaded', () => {
+    positionSlider('yearly');
+    render();
+  });
+
+  function setBilling(m) {
+    if (mode === m) return;
+    mode = m;
+    const pill = document.getElementById('savingsPill');
+    const oY   = document.getElementById('optYearly');
+    const oM   = document.getElementById('optMonthly');
+
+    oY.classList.toggle('active', m === 'yearly');
+    oM.classList.toggle('active', m === 'monthly');
+    pill.classList.toggle('hide', m === 'monthly');
+    positionSlider(m);
+    render();
+  }
+
+  function positionSlider(m) {
+    const opts   = document.getElementById('toggleOptions');
+    const slider = document.getElementById('toggleSlider');
+    const oY     = document.getElementById('optYearly');
+    const oM     = document.getElementById('optMonthly');
+    const target = m === 'yearly' ? oY : oM;
+    const optsR  = opts.getBoundingClientRect();
+    const targR  = target.getBoundingClientRect();
+    slider.style.left  = (targR.left - optsR.left - 5) + 'px';
+    slider.style.width = targR.width + 'px';
+    slider.classList.toggle('monthly', m === 'monthly');
+  }
+
+  // ── Alle Werte neu berechnen & setzen ─────
+  function render() {
+    const p = P[mode];
+    const yearly = mode === 'yearly';
+
+    // Plan cards
+    set('basic-price',    fmt(p.basic));
+    set('grow-price',     fmt(p.grow));
+    set('advanced-price', fmt(p.advanced));
+    const sub = yearly ? '/Monat · jährlich abgerechnet' : '/Monat · monatlich abgerechnet';
+    document.getElementById('basic-sub').textContent    = sub;
+    document.getElementById('grow-sub').textContent     = sub;
+    document.getElementById('advanced-sub').textContent = sub;
+
+    // Diffs
+    const db2g = p.grow - p.basic;           // 41 oder 55
+    const dg2a = p.advanced - p.grow;        // 223 oder 296
+    const da2p = 2100 - p.advanced;          // 1811 oder 1716
+
+    set('diff-b2g', '+ ' + fmt(db2g));
+    set('diff-g2a', '+ ' + fmt(dg2a));
+    set('diff-a2p', '+ ' + fmt(da2p));
+    document.getElementById('diff-b2g-desc').textContent =
+      yearly ? 'Mehrkosten/Monat bei jährlicher Zahlung' : 'Mehrkosten/Monat bei monatlicher Zahlung';
+
+    // ── Break-even Shopify Payments ──
+    const sp_b2g = Math.round(db2g / D.sp_b2g);
+    const sp_g2a = Math.round(dg2a / D.sp_g2a);
+    set('sp-b2g-be',       '≈ ' + n(sp_b2g) + ' €');
+    set('sp-b2g-calc',     fmt(db2g) + ' ÷ 0,3% = ' + n(sp_b2g) + ' €');
+    set('sp-b2g-diff-lbl', '+' + fmt(db2g) + '/Monat');
+    set('sp-b2g-orders',   String(Math.round(sp_b2g / 50)));
+    set('sp-g2a-be',       '≈ ' + n(sp_g2a) + ' €');
+    set('sp-g2a-calc',     fmt(dg2a) + ' ÷ 0,2% = ' + n(sp_g2a) + ' €');
+    set('sp-g2a-diff-lbl', '+' + fmt(dg2a) + '/Monat');
+    set('sp-a2p-diff-lbl', '+' + fmt(da2p) + '/Monat');
+
+    // ── Break-even 3rd Party ──
+    const tp_b2g = Math.round(db2g / D.tp_b2g);
+    const tp_g2a = Math.round(dg2a / D.tp_g2a);
+    set('tp-b2g-be',       '≈ ' + n(tp_b2g) + ' €');
+    set('tp-b2g-calc',     fmt(db2g) + ' ÷ 1,0% = ' + n(tp_b2g) + ' €');
+    set('tp-b2g-diff-lbl', '+' + fmt(db2g) + '/Monat');
+    set('tp-g2a-be',       '≈ ' + n(tp_g2a) + ' €');
+    set('tp-g2a-calc',     fmt(dg2a) + ' ÷ 0,4% = ' + n(tp_g2a) + ' €');
+    set('tp-g2a-diff-lbl', '+' + fmt(dg2a) + '/Monat');
+    set('tp-a2p-diff-lbl', '+' + fmt(da2p) + '/Monat');
+
+    // ROI examples
+    const roi_b2g = Math.round(20000 * D.tp_b2g - db2g);
+    const roi_g2a = Math.round(100000 * D.tp_g2a - dg2a);
+    set('tp-b2g-roi', `Bei 20.000 € Umsatz/Monat: 200 € Ersparnis → ROI +${roi_b2g} €/Monat`);
+    set('tp-g2a-roi', `Bei 100.000 € Umsatz/Monat: 400 € Ersparnis → ROI +${roi_g2a} €/Monat`);
+
+    // Feature block titles & inline references
+    set('feat-b2g-title', `Basic → Grow: +${fmt(db2g)}/Monat`);
+    set('feat-g2a-title', `Grow → Advanced: +${fmt(dg2a)}/Monat`);
+    set('feat-a2p-title', `Advanced → Plus: +${fmt(da2p)}/Monat`);
+    set('feat-b2g-3p',   n(tp_b2g) + ' €');
+    set('feat-g2a-sp',   n(sp_g2a) + ' €');
+
+    // Fazit texts
+    set('fazit-b2g', `Lohnt sich sobald: (a) 2+ Mitarbeiter im Shop, (b) Drittanbieter-Zahlungen ab ~${n(tp_b2g)} €/Monat oder (c) Online-Umsatz über ~${n(sp_b2g)} €/Monat. Wer alleine arbeitet und nur Shopify Payments nutzt, kann länger bei Basic bleiben.`);
+    set('fazit-g2a', `Lohnt sich bei: (a) Expansion in mehrere Länder/Märkte, (b) Team mit 6–15 Personen, (c) Online-Umsatz über ~${n(sp_g2a)} €/Monat, (d) Drittanbieter-Umsatz über ~${n(tp_g2a)} €/Monat. Viele Händler wählen Advanced primär wegen der internationalen Storefronts.`);
+
+    // Persona headers
+    set('who-basic',    fmt(p.basic));
+    set('who-grow',     fmt(p.grow));
+    set('who-advanced', fmt(p.advanced));
+
+    // Decision questions
+    set('q-b2g-sp',   n(sp_b2g) + ' €');
+    set('q-b2g-tp',   n(tp_b2g) + ' €');
+    set('q-b2g-diff', fmt(db2g));
+    set('q-g2a-sp',   n(sp_g2a) + ' €');
+    set('q-g2a-tp',   n(tp_g2a) + ' €');
+
+    // Hybrid tip
+    const eff = db2g - 30;
+    const hbe = eff > 0 ? Math.round(eff / D.tp_b2g) : 0;
+    set('q-hybrid-eff', fmt(eff));
+    set('q-hybrid-be',  n(hbe) + ' €');
+  }
+
+  // ── Helpers ───────────────────────────────
+  function fmt(v) { return v.toLocaleString('de-DE') + ' €'; }
+  function n(v)   { return v.toLocaleString('de-DE'); }
+
+  function set(id, val) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.textContent = val;
+    el.classList.remove('val-flash');
+    void el.offsetWidth;
+    el.classList.add('val-flash');
+  }
+
+  // Re-position slider on resize
+  window.addEventListener('resize', () => positionSlider(mode));
+</script>
 
 </body>
 </html>
